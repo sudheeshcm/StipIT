@@ -48,7 +48,7 @@
 					Register with us
 				</div>
 				<div class="panel-body">
-
+						<form id="signupForm">
 						<fieldset>
 							<div class="has-error">
 								<label class="control-label" id="nameLabel"></label>
@@ -62,7 +62,7 @@
 							</div>
 							<div class="input-group form-group" id="emailDiv">
 								<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-								<input type="text" name="email" id="email" class="form-control input-md" placeholder="Email Address" value="">
+								<input type="text" name="email" id="email" class="form-control input-md" placeholder="Email Address" value=""  data-validation="email">
 							</div>
 							<div class="has-error">
 								<label class="control-label" id="passLabel"></label>
@@ -89,16 +89,21 @@
 								</div>
 							</div>
 						</fieldset>
-					
+						</form>
 				</div>
 			</div>
 		</div>
 	</div>
-</div> <!-- /container -->
+</div> 
+		<script>
+			
+		</script>
+		<!-- /container -->
 		<!-- Bootstrap core JavaScript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.1/jquery.form-validator.min.js"></script>-->
 		<script src="javascripts/bootstrap.min.js"></script>
     	
     	<!-- Signup JavaScript code-->
@@ -106,6 +111,6 @@
 
 		<link rel="stylesheet" href="stylesheets/jquery-ui.min.css" />
 		<script src="javascripts/jquery-ui.min.js"></script>
-		
+
 	</body>
 </html>

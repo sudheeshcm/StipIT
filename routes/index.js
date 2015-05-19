@@ -16,13 +16,13 @@ module.exports = function(passport){
 	/* GET login page. */
 	router.get('/', function(req, res) {
     	// Display the Login page with any flash message, if any
-		res.render('login',{ message: req.flash('message')});
+		res.render('login');
 		
 	});
 
 	// Render the login page
 	  router.get('/login', function(req, res) {
-	    res.render('login',{ message: req.flash('message')});
+	    res.render('login');
 	  });
 
 	/* Handle Login POST */
@@ -34,20 +34,35 @@ module.exports = function(passport){
 
 	/* GET Registration Page */
 	router.get('/signup', function(req, res){
-		res.render('signup',{ message: req.flash('message')});
+		res.render('signup');
 	});
 
 	 // Renders the reset password page.
 	 router.get('/resetPassword', function(req, res) {
-	    res.render('resetPassword',{ message: req.flash('message')});
+	    res.render('resetPassword');
 	  });
 
 	/* Handle Registration POST */
-	router.post('/signup', passport.authenticate('signup', {
-		successRedirect: '/login',
+	router.post('/signup', function(req, res, next){
+		 passport.authenticate('signup', function(err, user, msg){
+	        if (err) console.log("Error: ",err);
+	        if (user) console.log("User created: ",user.username);
+	        if (msg) console.log("Message: ",msg.message);
+	        var data = {err : err, msg : msg, user : user}; 
+		    console.log("Req: "+req+", Res: "+res); res.json(data);
+         })(req, res, next);
+    });
+	/*app.post('/auth/register', function(req, res, next) {
+	  passport.authenticate('local-register', function(err, user, info) {
+	    
+	  })(req, res, next);
+	});*/
+
+    //{
+		/*successRedirect: '/login',
 		failureRedirect: '/signup',
-		failureFlash : true  
-	}));
+		failureFlash : true  */
+	//});
 
 	/* GET Home Page */
 	router.get('/home', isAuthenticated, function(req, res){

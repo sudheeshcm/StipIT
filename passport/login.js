@@ -13,20 +13,36 @@ module.exports = function(passport){
                 function(err, user) {
                     // In case of any error, return using the done method
                     if (err)
-                        return done(err);
+                    {
+                        //return done(err);
+                        console.log("Login unsuccessfull, Email matching query failed failed."+ error.message);
+                            var data = {objectId : "", error: err};
+                            res.json(data);
+                    }
+
                     // Username does not exist, log the error and redirect back
-                    if (!user){
+                    else if (!user){
                         console.log('User Not Found with username '+username);
-                        return done(null, false, req.flash('message', 'User Not found.'));                 
+                        //return done(null, false, req.flash('message', 'User Not found.'));                 
+                            var data = {objectId : "", error: err};
+                            res.json(data);
                     }
                     // User exists but wrong password, log the error 
-                    if (!isValidPassword(user, password)){
+                    else if (!isValidPassword(user, password)){
                         console.log('Invalid Password');
-                        return done(null, false, req.flash('message', 'Invalid Password')); // redirect back to login page
+                        //return done(null, false, req.flash('message', 'Invalid Password')); // redirect back to login page
+                        var data = {objectId : "", error: {message: "Invalid Password"}};
+                            res.json(data);
                     }
-                    // User and password both match, return user from done method
-                    // which will be treated like success
-                    return done(null, user);
+                    else
+                    {
+                        // User and password both match, return user from done method
+                        // which will be treated like success
+                        //return done(null, user);
+                        var data = {objectId : "123", user: user};
+                        res.json(data);  
+                    }
+                    
                 }
             );
 

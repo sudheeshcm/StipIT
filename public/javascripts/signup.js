@@ -1,6 +1,10 @@
+var validateEmail = function(email) {
+    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    return re.test(email);
+}
 $(document).ready(function(){
   $('#signupBtn').click(function(){
-
+    console.log("Button clicked..!!!");
 	name=$("#name").val();
 	email=$("#email").val();
     password=$("#password").val();
@@ -20,6 +24,7 @@ $(document).ready(function(){
 		document.getElementById("nameLabel").innerHTML = 'Name should be atleast 4 characters long.';
 		proceedSignup = 1;
 	}
+
     if(password != cnfPassword){
 		$( "#passDiv2" ).addClass( "has-error" );
 		document.getElementById("passLabel2").innerHTML = "Password mismatch.";
@@ -38,6 +43,12 @@ $(document).ready(function(){
 		document.getElementById("emailLabel").innerHTML = 'Please enter an Email address.';
 		proceedSignup = 1;
 	}
+	if (validateEmail(email) != true) {
+		console.log("Email not valid: "+email);
+		$( "#emailDiv" ).addClass( "has-error" );
+		document.getElementById("emailLabel").innerHTML = 'Please enter a valid Email address.';
+		proceedSignup = 1;
+	};
 
 	if (password.length < 4) {
 		$( "#passDiv1" ).addClass( "has-error" );
@@ -55,26 +66,27 @@ $(document).ready(function(){
     	$.ajax({
 	      url: '/signup',
 	      type: 'post',
-	      data: {name: name,
-	      		password: password,
-	      		email: email
-	      		},
+	      data: {username: name,
+	      password: password,
+	      email: email
+	      	},
 	      	success: function(data) {
 		          console.log("signup called");
-		       	  if (data.objectId == "" || data.username == "")
+		       	  if(data.err || data.msg) //(data.objectId == "" || data.username == "")
 		       	   {
-			       	  	console.log("postSignup Error-- "+data.error+", Message: "+ data.error.message);
-			       	  	if (data.error.message == "invalid email address") {
-			       	  		document.getElementById("emailLabel").innerHTML = "Invalid email address.";
+			       	  	//console.log("postSignup Error-- "+data.err+", Message: "+ data.err.message);
+			       	  	if (data.err) {
+			       	  		document.getElementById("nameLabel").innerHTML = data.err;
 			       	  		$( "#emailDiv" ).addClass( "has-error" );
 						}
-						else if(data.error.message == 'username '+name+' already taken'){
-							document.getElementById("nameLabel").innerHTML = 'Username '+name+' already taken.';
+						if(data.msg){
+							document.getElementById("nameLabel").innerHTML = data.msg.message;
 							$( "#nameDiv" ).addClass( "has-error" );
 						}
-						else{
+						/*else{
 							document.getElementById("nameLabel").innerHTML = data.error.message;	
-						}
+						}*/
+						console.log("Signup error..!!");
 						document.getElementById("name").value = '';
 						document.getElementById("password").value = '';
 				       	document.getElementById("cnfPassword").value = '';
@@ -82,11 +94,12 @@ $(document).ready(function(){
 					}
 					else
 					{
+						console.log("User: "+data.user.username);
 						window.location.assign("/login");
 					}
 			},
 			error: function(error) {
-					console.log("Parse Signup failed.!! "+ error.message);
+					console.log("Signup failed.!! "+ error.message);
 			}
 		});	
     }

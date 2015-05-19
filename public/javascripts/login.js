@@ -7,15 +7,14 @@ $(document).ready(function(){
                 
                 var objectId = 0;   
 							    $.ajax({
-							      url: '/Parselogin',
+							      url: '/login',
 							      type: 'post',
 							     
 							      data: {email: email,
-							      		password: password,
-							      		objectId: objectId
+							      		password: password
 							      		},
 							      success: function(data) {
-							          console.log("Parselogin called");
+							          console.log("login called");
 				
 							       	  if (data.objectId == "")
 							       	  {
