@@ -1,0 +1,181 @@
+/* Credit to bootsnipp.com for the css for the color graph */
+.colorgraph {
+  height: 5px;
+  border-top: 0;
+  background: #c4e17f;
+  border-radius: 5px;
+  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}
+
+.heading-font-size {
+  font-size: 24px;
+}
+
+.login-panel-heading {
+  font-size: 14px !important;
+}
+.text-align-right {
+	text-align: right;
+}
+
+.message-details {
+	text-align: left;
+	margin-left: 10px;
+}
+.profile-small {
+	width: 64px; 
+	height: 64px;
+  border-radius: 32px;
+}
+
+.vertical-align {
+  display: -webkit-flex; /* Safari */
+  -webkit-align-items: center; /* Safari 7.0+ */
+  display: flex;
+  align-items: center;
+}
+
+body {
+  background-color: #EEF2F5;
+  color: #6f7e8b;
+  font-size: 12px;
+}
+
+a {
+  color: #65d3e3;
+}
+
+
+.panel-heading-color {
+  background-color: #65d3e3 !important;
+  color: white !important;
+  border-color: #65d3e3 !important;
+  height: 50px;
+  padding-top: 15px;
+  font-size: 13px;
+}
+
+table {
+  border-color: #F5F5F5 !important;
+}
+td {
+  border-color: #F5F5F5 !important;
+}
+
+.panel-footer-color {
+  background-color: #fdfdfd !important;
+  color: white !important;
+  height: 45px;
+  padding-top: 12px;
+  border-top-color: #F5F5F5 !important;
+}
+
+.panel-border {
+  border: 0px;
+}
+
+.light-border {
+  border-color: #F5F5F5 !important;
+}
+
+a.list-group-item:focus, a.list-group-item:hover {
+	background-color: #E0F0F2;
+}
+
+
+.btn-primary-color {
+  background-color: #65D3E3;
+  color: white;
+}
+
+
+
+
+#custom-bootstrap-menu.navbar-default .navbar-brand {
+    color: rgba(119, 119, 119, 1);
+    padding-top: 0px;
+}
+#custom-bootstrap-menu.navbar-default {
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 1);
+    border-bottom-width: 1px;
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a {
+    color: rgba(119, 119, 119, 1);
+    background-color: rgba(248, 248, 248, 0);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:focus {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(101, 211, 227, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:focus {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(101, 211, 227, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle {
+    border-color: #65d3e3;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus {
+    background-color: #65d3e3;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #65d3e3;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #ffffff;
+}
+
+
+
+
+
+section {
+    padding: 100px 0;
+    background-color: #f0f0f0;
+    text-align: center;
+}
+.lead-big {
+    font-size: 28px;
+    line-height: 48px;
+    color: #999;
+}
+.form-inline input,
+.form-inline textarea,
+.form-inline select {
+    max-width: 235px;
+   /* height: 40px;*/
+    overflow: hidden;
+    /*line-height: 40px;*/
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px dotted;
+    vertical-align: text-bottom;
+    cursor: pointer;
+}
+.form-inline .form-group label {
+    position: relative;
+}
+.form-inline .form-group label > span {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    font-size: 12px;
+    color: #bdc3c7; 
+    opacity: 1;
+}
+.submit.btn.btn-lg {
+    font-size: 28px;
+    color: #999;
+    border: 1px dotted;
+    background-color: transparent;
+    border-radius: 0;
+}
+

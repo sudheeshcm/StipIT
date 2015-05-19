@@ -1,0 +1,276 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="favicon.ico">
+
+	<title>Home</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="/css/navbar-fixed-top.css" rel="stylesheet">
+	<link href="/css/stock.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#"><img style="margin:0px; padding:0px;height:50px" src="/css/Images/logo_web.png" /></a>
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse navbar-menubuilder">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active"><a href="/h/home">Home</a></li>
+					<li><a href="/profile">My Account</a></li>
+					<li><a href="/logout" onclick='logout();'>Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+<div class="container">
+	<div class="row">
+		
+		<div class="col-md-4">
+			<div class="panel panel-default panel-border">
+	<div class="panel-body">
+		<div class="media">
+			<div class="media-left media-middle">
+				<a href="/h/home" id="profilePic">
+					<img class="media-object profile-small" src="/css/Images/avatar_default_small.png" alt="...">
+				</a>
+			</div>
+			<div class="media-body">
+				<div ><b><a href="/h/home"><span id="currentUser">Profile Details</span></a></b></div>
+				<div style="padding-top:5px;">10 <span style="color:green;">Correct</span> | 2 <span style="color:red;">Incorrect</span></div>
+				<div style="padding-top:5px;" id="NumberOfFollowers">Fetching number of Followers</div> 
+			</div>
+		</div>
+	</div>
+</div>			<div class="panel panel-default panel-border">
+	<div class="panel-heading panel-heading-color">Top 5 Stocks</div>
+	<div class="list-group">
+		<a href="#" class="list-group-item light-border">
+			<div class="row">
+				<div class="col-md-4">Infy</div>
+				<div class="col-md-8 text-align-right">Infosys</div>
+			</div>
+		</a>
+		<a href="#" class="list-group-item light-border">
+			<div class="row">
+				<div class="col-md-4">TCS</div>
+				<div class="col-md-8 text-align-right">Tata Consultancy Service</div>
+			</div>
+		</a>
+		<a href="#" class="list-group-item light-border">
+			<div class="row">
+				<div class="col-md-4">ALOKTEXT</div>
+				<div class="col-md-8 text-align-right">Alok Industires</div>
+			</div>
+		</a>
+		<a href="#" class="list-group-item light-border">
+			<div class="row">
+				<div class="col-md-4">TATAMOTORS</div>
+				<div class="col-md-8 text-align-right">Tata Motors</div>
+			</div>
+		</a>
+		<a href="#" class="list-group-item light-border">
+			<div class="row">
+				<div class="col-md-4">BSE</div>
+				<div class="col-md-8 text-align-right">Bombay Stock Index</div>
+			</div>
+		</a>
+	</div>
+</div>		</div>
+		<div class="col-md-8">
+
+			<div class="panel-heading panel-heading-color">
+				<div class="row">
+					<div class="col-xs-8">
+						Create Tip
+					</div>
+				</div>
+				
+			</div>
+			<div class="panel panel-default panel-border">
+				<div class="panel-body">
+					<form class="form-inline" action="/createStockTip" role="form">
+						<div class="has-error">
+							<label class="control-label"></label>
+						</div>
+						<div class="form-group">
+							<input id="stock" placeholder="INFY - NSE" required>
+							is a 
+						</div>
+						<div class="form-group">
+							<select id="callType">
+								<option value="0" selected>Buy</option>
+								<option value="1">Sell</option>
+							</select>
+							call with a target of
+						</div>
+						<div class="form-group">
+							Rs.
+							<input  type="integer" id="target_price" placeholder="10.24" required>
+							and a stop loss of 
+						</div>
+						<div class="form-group">
+							Rs.
+							<input type="integer" id="stop_loss" placeholder="9.52" required>
+							in
+						</div>
+						<div class="form-group">
+							<input type="integer" id="time" placeholder="10" required>
+							<select id="time_period">
+								<option value="0" selected>Day</option>
+								<option value="1">Weak</option>
+								<option value="1">Month</option>
+							</select>
+						</div>
+						<div class="clearfix"></div>
+						<br />
+						<div class="">
+							<button id="createTip" class="btn btn-md btn-block btn-primary-color">Create Tip</button>
+						</div>
+						
+					</form>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-border">
+	<div class="panel-heading panel-heading-color">
+		<div class="row">
+			<div class="col-xs-8">
+				Phillip Marszal
+			</div>
+			<div class="col-xs-4 text-align-right">
+				<span>4 min ago</span>
+			</div>
+		</div>
+		
+	</div>
+	<div class="panel-body">
+		<div class="row vertical-align">
+			<div style="padding-left:20px;width:70px;float:left">
+				<img class="media-object profile-small" src="/css/Images/avatar_default_small.png" alt="user">
+			</div style="float:left">
+			<div class="col-xs-10 message-details"><a href="#">Phillip Marszal</a> gave <a href="#">CVOL</a> a strong buy rating</div>
+		</div>
+	</div>
+	<table class="table">
+		<tr>
+			<td>Expires</td><td>12 Mar 2015</td>
+			<td>Change</td><td>5%</td>
+		</tr>
+		<tr>
+			<td>Price at creation</td><td>Rs. 1423.50</td>
+			<td>Current Price</td><td>Rs. 1423.60</td>
+		</tr>
+	</table>
+	<div class="panel-footer panel-footer-color">
+		<a href="#"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 10</a>&nbsp;&nbsp;
+		<a href="#"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 20</a>
+		<!-- <a href="#" class="glyphicon glyphicon-comment" aria-hidden="true"></a> -->
+	</div>
+</div>			<div class="panel panel-default panel-border">
+	<div class="panel-heading panel-heading-color">
+		<div class="row">
+			<div class="col-xs-8">
+				Phillip Marszal
+			</div>
+			<div class="col-xs-4 text-align-right">
+				<span>4 min ago</span>
+			</div>
+		</div>
+		
+	</div>
+	<div class="panel-body">
+		<div class="row vertical-align">
+			<div style="padding-left:20px;width:70px;float:left">
+				<img class="media-object profile-small" src="/css/Images/avatar_default_small.png" alt="user">
+			</div style="float:left">
+			<div class="col-xs-10 message-details"><a href="#">Phillip Marszal</a> gave <a href="#">CVOL</a> a strong buy rating</div>
+		</div>
+	</div>
+	<table class="table">
+		<tr>
+			<td>Expires</td><td>12 Mar 2015</td>
+			<td>Change</td><td>5%</td>
+		</tr>
+		<tr>
+			<td>Price at creation</td><td>Rs. 1423.50</td>
+			<td>Current Price</td><td>Rs. 1423.60</td>
+		</tr>
+	</table>
+	<div class="panel-footer panel-footer-color">
+		<a href="#"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 10</a>&nbsp;&nbsp;
+		<a href="#"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 20</a>
+		<!-- <a href="#" class="glyphicon glyphicon-comment" aria-hidden="true"></a> -->
+	</div>
+</div>			<div class="panel panel-default panel-border">
+	<div class="panel-heading panel-heading-color">
+		<div class="row">
+			<div class="col-xs-8">
+				Phillip Marszal
+			</div>
+			<div class="col-xs-4 text-align-right">
+				<span>4 min ago</span>
+			</div>
+		</div>
+		
+	</div>
+	<div class="panel-body">
+		<div class="row vertical-align">
+			<div style="padding-left:20px;width:70px;float:left">
+				<img class="media-object profile-small" src="/css/Images/avatar_default_small.png" alt="user">
+			</div style="float:left">
+			<div class="col-xs-10 message-details"><a href="#">Phillip Marszal</a> gave <a href="#">CVOL</a> a strong buy rating</div>
+		</div>
+	</div>
+	<table class="table">
+		<tr>
+			<td>Expires</td><td>12 Mar 2015</td>
+			<td>Change</td><td>5%</td>
+		</tr>
+		<tr>
+			<td>Price at creation</td><td>Rs. 1423.50</td>
+			<td>Current Price</td><td>Rs. 1423.60</td>
+		</tr>
+	</table>
+	<div class="panel-footer panel-footer-color">
+		<a href="#"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 10</a>&nbsp;&nbsp;
+		<a href="#"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 20</a>
+		<!-- <a href="#" class="glyphicon glyphicon-comment" aria-hidden="true"></a> -->
+	</div>
+</div>		</div>
+	</div>
+</div>
+<!-- /container -->
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+    	
+    	<!-- Home JavaScript code-->
+    	<script src="/js/home.js"></script>
+
+		<link rel="stylesheet" href="/css/jquery-ui.min.css" />
+		<script src="/js/jquery-ui.min.js"></script>
+		<script src="/js/stock.js"></script>
+	</body>
+</html>
