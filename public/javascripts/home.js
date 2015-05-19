@@ -1,5 +1,5 @@
 if(localStorage.loggedUserId == ""){
-   window.location.assign('/login'); 
+   //window.location.assign('/login'); 
 };
 
 var logout = function()

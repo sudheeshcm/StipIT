@@ -2,21 +2,10 @@
 module.exports = function(){
   var express = require('express');
   var app = express();
+  var router = express.Router();
   app.set('view engine', 'ejs');
 
-  // Renders homepage
-  app.get('/home', function(req, res) {
-      var user = Parse.User.current();
-      console.log(user);
-      if(user != null){
-        console.log("User logged in, "+user.attributes.username);
-        res.render('home');
-      }
-      else{
-        console.log("No session found..!!");
-        res.render('login');
-      }
-  });
+  
 
 // Populates the Current User
 app.get('/CurrentUser', function(req, res) {
