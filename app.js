@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -62,10 +62,10 @@ app.get('/', function(req, res) {
   		res.render('views/login');
 });
 
-// User endpoints
-app.use('/', require('routes/users'));
+/*// User endpoints
+app.use('/', require('routes/users'));*/
 
 // Stip_iT Home endpoints
-app.use('/h', require('routes/StipitHome'));
+app.use('/h', require('./routes/StipitHome'));
 
 module.exports = app;
