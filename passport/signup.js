@@ -8,7 +8,6 @@ module.exports = function(passport){
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
         function(req, username, password, done) {
-            console.log("Pasport reached..!!", username);
             findOrCreateUser = function(){
                 // find a user in Mongo with provided username
                 User.findOne({ 'username' :  username }, function(err, user) {
@@ -20,7 +19,7 @@ module.exports = function(passport){
                     // already exists
                     else if (user) {
                         console.log('User already exists with username: '+username);
-                        return done(null, false, {message: 'User already exists.'});
+                        return done(null, false, {message: 'Username already taken.'});
                     } 
                     else 
                     {
@@ -41,7 +40,7 @@ module.exports = function(passport){
                                 console.log('Error in Saving user: '+err);  
                                 throw err;  
                             }
-                            console.log('User Registration succesful');    
+                            console.log('User Registration succesfull.');    
                             return done(null, newUser);
                         });
                     }

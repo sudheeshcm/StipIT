@@ -5,25 +5,39 @@ $(document).ready(function(){
     			var password=$("#password").val();
     			console.log("loginBtn clicked..!!, Email: "+ email);
                 
-                var objectId = 0;   
-							    $.ajax({
+                if(email == "" || password == "")
+                {
+                	$( "#emailDiv" ).addClass( "has-error" );
+					$( "#passDiv" ).addClass( "has-error" );
+					document.getElementById('email').value = "";
+					document.getElementById('password').value = "";
+					document.getElementById('error-info').innerHTML = "Please enter an email address and password.";	
+                }
+                else
+                {
+                	$.ajax({
 							      url: '/login',
 							      type: 'post',
 							     
-							      data: {email: email,
+							      data: {
+							      		username: "dummy",
+							      		email: email,
 							      		password: password
 							      		},
 							      success: function(data) {
 							          console.log("login called");
 				
-							       	  if (data.objectId == "")
+							       	  if (data.err || data.msg)
 							       	  {
-								          if(data.error){console.log("postLogin Error, Message: "+ data.error.message);}
-								          if (data.error.message == "Email not verified.") {
+								          if (data.msg.message == "Email not verified.") {
 								          	document.getElementById('error-info').innerHTML = "Email not verified. Please verify it from your mailbox.";	
 								          }
+								          else if (data.msg.message == "Missing credentials") {
+								          	document.getElementById('error-info').innerHTML = "Please enter an email address and password.";	
+								          }
 								          else{
-								          	document.getElementById('error-info').innerHTML = "Invalid email / password";	
+								          	console.log(data.err ? data.err : data.msg.message);
+								          	document.getElementById('error-info').innerHTML = "Invalid email / password.";	
 								          }
 								       	  $( "#emailDiv" ).addClass( "has-error" );
 								       	  $( "#passDiv" ).addClass( "has-error" );
@@ -34,20 +48,33 @@ $(document).ready(function(){
 							       	  {
 								       	  	if(typeof(Storage) !== "undefined") {
 											//     Code for localStorage/sessionStorage.
-											    localStorage.loggedUserId = data.objectId;
+											    localStorage.loggedUser = data.user.username;
 					                        	console.log("Local Storage initialized..!!");
 											} else {
 											    console.log("Sorry! No Web Storage support..!");
 											}
 					                        
-					                        console.log("Logged User ID: " + localStorage.loggedUserId );
-											window.location.assign("/h/home");
+					                        console.log("Logged User: " + localStorage.loggedUser );
+					                        window.location.assign('/home');
+											/*$.ajax({
+											      url: '/home',
+											      type: 'get',
+											      data: { user : data.user },
+											      success: function(data) {
+											      		console.log("Login successfull and routed to Home page.")
+											      },
+											      error: function(error) {
+											               console.log("Login not successfull!!, "+ error.message);
+											      }
+										    });  	*/
 							       	  }
 							       	},
 							        error: function(error) {
-							               console.log("Parse login failed.!!"+ error.message);
+							               console.log("Login failed.!!"+ error.message);
 							        }
-							     });
+					});
+                }	
+							    
         });
 });
 

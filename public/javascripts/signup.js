@@ -1,5 +1,6 @@
 var validateEmail = function(email) {
-    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    //var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    var re = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
     return re.test(email);
 }
 $(document).ready(function(){
@@ -74,18 +75,13 @@ $(document).ready(function(){
 		          console.log("signup called");
 		       	  if(data.err || data.msg) //(data.objectId == "" || data.username == "")
 		       	   {
-			       	  	//console.log("postSignup Error-- "+data.err+", Message: "+ data.err.message);
 			       	  	if (data.err) {
 			       	  		document.getElementById("nameLabel").innerHTML = data.err;
-			       	  		$( "#emailDiv" ).addClass( "has-error" );
 						}
 						if(data.msg){
 							document.getElementById("nameLabel").innerHTML = data.msg.message;
-							$( "#nameDiv" ).addClass( "has-error" );
 						}
-						/*else{
-							document.getElementById("nameLabel").innerHTML = data.error.message;	
-						}*/
+						$( "#nameDiv" ).addClass( "has-error" );
 						console.log("Signup error..!!");
 						document.getElementById("name").value = '';
 						document.getElementById("password").value = '';

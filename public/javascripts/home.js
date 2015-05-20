@@ -4,8 +4,8 @@ if(localStorage.loggedUserId == ""){
 
 var logout = function()
 {
-        localStorage.loggedUserId = "";
-        console.log("User logged out, ID: " + localStorage.loggedUserId);
+        localStorage.loggedUser = "";
+        console.log("User logged out, " + localStorage.loggedUser);
 }
 
 $(function() {
