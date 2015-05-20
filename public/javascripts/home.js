@@ -1,5 +1,5 @@
-if(localStorage.loggedUserId == ""){
-   //window.location.assign('/login'); 
+if(localStorage.loggedUser == ""){
+   window.location.assign('/login'); 
 };
 
 var logout = function()
@@ -33,7 +33,7 @@ $(function() {
                 document.getElementById('NumberOfFollowers').innerHTML = data.NumberOfFollowers + " Followers";
             });
     };
-    populateCurrentUser();
-    populateCurrentUserFollowers();
+    //populateCurrentUser();
+    //populateCurrentUserFollowers();
     
 });    
