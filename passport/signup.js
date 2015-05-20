@@ -1,6 +1,7 @@
 var LocalStrategy   = require('passport-local').Strategy;
 var User = require('../models/user');
 var bCrypt = require('bcrypt-nodejs');
+var validator = require("email-validator");
 
 module.exports = function(passport){
 
@@ -8,6 +9,10 @@ module.exports = function(passport){
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
         function(req, username, password, done) {
+            
+            if (validator.validate(req.body.email) == false) {
+                return done(null, false, {message: 'Please enter a valid Email address.'});
+            };
             findOrCreateUser = function(){
                 // find a user in Mongo with provided username
                 User.findOne({ 'username' :  username }, function(err, user) {

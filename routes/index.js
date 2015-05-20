@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+
 module.exports = function(passport){
 
 	/* GET login page. */
@@ -74,5 +75,6 @@ module.exports = function(passport){
 	  }
 	  
 	}
+
 	return router;
 }

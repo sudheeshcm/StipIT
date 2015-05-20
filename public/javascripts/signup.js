@@ -73,20 +73,27 @@ $(document).ready(function(){
 	      	},
 	      	success: function(data) {
 		          console.log("signup called");
-		       	  if(data.err || data.msg) //(data.objectId == "" || data.username == "")
+		       	  if(data.err || data.msg) 
 		       	   {
 			       	  	if (data.err) {
 			       	  		document.getElementById("nameLabel").innerHTML = data.err;
+			       	  		$( "#nameDiv" ).addClass( "has-error" );
 						}
 						if(data.msg){
-							document.getElementById("nameLabel").innerHTML = data.msg.message;
+							if (data.msg.message == "Please enter a valid Email address.") {
+								$( "#emailDiv" ).addClass( "has-error" );
+								document.getElementById("emailLabel").innerHTML = 'Please enter a valid Email address.';
+							}
+							else{
+								document.getElementById("nameLabel").innerHTML = data.msg.message;
+								$( "#nameDiv" ).addClass( "has-error" );
+							}
 						}
-						$( "#nameDiv" ).addClass( "has-error" );
-						console.log("Signup error..!!");
-						document.getElementById("name").value = '';
-						document.getElementById("password").value = '';
-				       	document.getElementById("cnfPassword").value = '';
-						document.getElementById("email").value = '';
+					Console.log("Signup error..!!");
+					document.getElementById("name").value = '';
+					document.getElementById("password").value = '';
+				    document.getElementById("cnfPassword").value = '';
+					document.getElementById("email").value = '';
 					}
 					else
 					{

@@ -23,8 +23,9 @@ $(document).ready(function(){
 	}
     else
     {
+    	console.log("Reset password called...!!!");
     	$.ajax({
-	      url: '/resetPass',
+	      url: '/users/resetPass',
 	      type: 'post',
 	      data: {
 	      		email: email
@@ -44,14 +45,12 @@ $(document).ready(function(){
 					if (data.err_msg == "invalid email address") {
 						document.getElementById("emailLabel").innerHTML = "Invalid Email address.";
 					}
-					else if (data.err_msg == 'no user found with email '+email) {
-						document.getElementById("emailLabel").innerHTML = "No User found with Email "+ email + ".";
-					}
 					else{
 						document.getElementById("emailLabel").innerHTML = data.err_msg;	
 					}
 					document.getElementById("email").value = '';
 	      		}
+	      		console.log("Success..!!");
 		          
 		   
 			},
