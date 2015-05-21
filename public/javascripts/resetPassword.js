@@ -34,25 +34,17 @@ $(document).ready(function(){
 	      		if (data.reset_status == "success") {
 	      			console.log("Password reset request sent. Status: ",data.reset_status);
 	      			document.getElementById("emailLabel").style.color = 'green';
-			        document.getElementById("emailLabel").innerHTML = "Password reset request sent. Redirecting page..";
+			        document.getElementById("emailLabel").innerHTML = "Stip_iT Password reset request sent. Please check your mailbox.<br>Redirecting to login page..";
 			        window.setTimeout(function () {
 					        location.href = "/login";
-					    }, 3000);
+					    }, 5000);
 	      		}
 	      		else{
 	      			console.log("Password reset request not sent. Message:",data.err_msg);
 					$( "#emailDiv" ).addClass( "has-error" );
-					if (data.err_msg == "invalid email address") {
-						document.getElementById("emailLabel").innerHTML = "Invalid Email address.";
-					}
-					else{
-						document.getElementById("emailLabel").innerHTML = data.err_msg;	
-					}
+					document.getElementById("emailLabel").innerHTML = data.err_msg;	
 					document.getElementById("email").value = '';
-	      		}
-	      		console.log("Success..!!");
-		          
-		   
+	      		}		   
 			},
 			error: function(error) {
 					console.log("Password reset request not sent. Message:",error.message);
