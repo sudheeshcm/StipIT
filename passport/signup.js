@@ -2,6 +2,16 @@ var LocalStrategy   = require('passport-local').Strategy;
 var User = require('../models/user');
 var bCrypt = require('bcrypt-nodejs');
 var validator = require("email-validator");
+var nodemailer = require('nodemailer');
+var crypto = require('crypto');
+
+var transporter = nodemailer.createTransport({
+                    service: 'Gmail',
+                    auth: {
+                        user: 'noreply.StipiT.robot@gmail.com',
+                        pass: 'stipitstipit'
+                    }
+                });
 
 module.exports = function(passport){
 
@@ -13,39 +23,77 @@ module.exports = function(passport){
             if (validator.validate(req.body.email) == false) {
                 return done(null, false, {message: 'Please enter a valid Email address.'});
             };
+            // find a user in Mongo with provided username
             findOrCreateUser = function(){
-                // find a user in Mongo with provided username
-                User.findOne({ 'username' :  username }, function(err, user) {
+                var token,mailOptions,host,link;
+                crypto.randomBytes(20, function(err, buf) {
+                                    token = buf.toString('hex');
+                });
+                User.find({ $or:[{ 'username' :  username },{'email': req.body.email}]}, function(err, users) {
+                    var userFoundStatus = false;
                     // In case of any error, return using the done method
                     if (err){
-                        console.log('Error in SignUp: '+err);
-                        return done(err);
+                            console.log('Error in SignUp: '+err);
+                            return done(err);
                     }
-                    // already exists
-                    else if (user) {
-                        console.log('User already exists with username: '+username);
-                        return done(null, false, {message: 'Username already taken.'});
-                    } 
+                    for(var val in users){
+                            console.log("Vals",val);
+                            // username already exists
+                            if (users[val].username == username) {
+                                console.log('Username already taken.');
+                                userFoundStatus = true;
+                                return done(null, false, {message: 'Username already taken.'});    
+
+                            }
+                            // email already exists
+                            else if (users[val].email == req.body.email) {
+                                console.log('Email already taken.');
+                                userFoundStatus = true;
+                                return done(null, false, {message: 'Email already taken.'});    
+                            }
+                    }
+                    if (userFoundStatus == true) {
+                        console.log("Data redundant. Use cannot be created.");
+                    }
                     else 
                     {
                         // if there is no user with that email
                         // create the user
                         var newUser = new User();
-
                         // set the user's local credentials
                         newUser.username = username;
                         newUser.password = createHash(password);
                         newUser.email = req.body.email;
+                        newUser.emailVerified = false;
                         /*newUser.firstName = req.param('firstName');
                         newUser.lastName = req.param('lastName');*/
-
+                        newUser.signupToken = token;
+                        console.log("Account verification token: ", newUser.signupToken);
                         // save the user
                         newUser.save(function(err) {
                             if (err){
                                 console.log('Error in Saving user: '+err);  
                                 throw err;  
                             }
-                            console.log('User Registration succesfull.');    
+                            console.log('User Registration succesfull.');
+                            
+                            //        rand=Math.floor((Math.random() * 100) + 54);
+                            host=req.get('host');
+                            link="http://"+req.get('host')+"/users/verify/"+username+"/"+token;
+                            mailOptions={
+                                        to : req.body.email,
+                                        subject : "Please confirm your Stip_iT Email account",
+                                        html : "Hello,<br> Please Click on the link to verify your Stip_iT account email.<br><a href="+link+">Click here to verify</a><br>Regards,<br>Stip_iT Team" 
+                            }
+                            console.log(mailOptions);
+                            transporter.sendMail(mailOptions, function(error, info){
+                                if(error){
+                                                console.log(error);
+                                                res.end("error");
+                                }else{
+                                                console.log("Message sent: " + info.response);
+                                }
+                            });
                             return done(null, newUser);
                         });
                     }

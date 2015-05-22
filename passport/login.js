@@ -30,6 +30,10 @@ module.exports = function(passport){
                         console.log('Invalid Password');
                         return done(null, false, {'message': 'Invalid Password.'}); 
                     }
+                    else if (user.emailVerified != true){
+                        console.log('Email not verified.');
+                        return done(null, false, {'message': 'Email not verified.'}); 
+                    }
                     else
                     {
                         // User and password both match, return user from done method

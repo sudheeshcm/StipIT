@@ -10,5 +10,7 @@ module.exports = mongoose.model('User',{
 	profilePicId: String,
 	profilePicFormat: String,
 	resetPasswordToken: String,
-  resetPasswordExpires: Date
+    resetPasswordExpires: Date,
+    signupToken : String,
+    emailVerified: Boolean
 });

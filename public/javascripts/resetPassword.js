@@ -34,10 +34,12 @@ $(document).ready(function(){
 	      		if (data.reset_status == "success") {
 	      			console.log("Password reset request sent. Status: ",data.reset_status);
 	      			document.getElementById("emailLabel").style.color = 'green';
+	      			document.getElementById("email").value = '';
+	      			document.getElementById("resetPassBtn").disabled = true; 
 			        document.getElementById("emailLabel").innerHTML = "Stip_iT Password reset request sent. Please check your mailbox.<br>Redirecting to login page..";
 			        window.setTimeout(function () {
 					        location.href = "/login";
-					    }, 5000);
+					    }, 4000);
 	      		}
 	      		else{
 	      			console.log("Password reset request not sent. Message:",data.err_msg);

@@ -84,22 +84,30 @@ $(document).ready(function(){
 								$( "#emailDiv" ).addClass( "has-error" );
 								document.getElementById("emailLabel").innerHTML = 'Please enter a valid Email address.';
 							}
+							else if (data.msg.message == 'Email already taken.') {
+								$( "#emailDiv" ).addClass( "has-error" );
+								document.getElementById("emailLabel").innerHTML = data.msg.message;
+							}	
 							else{
 								document.getElementById("nameLabel").innerHTML = data.msg.message;
 								$( "#nameDiv" ).addClass( "has-error" );
 							}
 						}
-					Console.log("Signup error..!!");
-					document.getElementById("name").value = '';
-					document.getElementById("password").value = '';
-				    document.getElementById("cnfPassword").value = '';
-					document.getElementById("email").value = '';
 					}
 					else
 					{
 						console.log("User: "+data.user.username);
-						window.location.assign("/login");
+						document.getElementById("nameLabel").style.color = 'green';
+		      			document.getElementById("signupBtn").disabled = true; 
+				        document.getElementById("nameLabel").innerHTML = "User registration completed. Please check your mailbox for verifying your account.<br>Redirecting to login page..";
+						window.setTimeout(function () {
+					        location.href = "/login";
+					    }, 4000);
 					}
+					document.getElementById("name").value = '';
+					document.getElementById("password").value = '';
+				    document.getElementById("cnfPassword").value = '';
+					document.getElementById("email").value = '';
 			},
 			error: function(error) {
 					console.log("Signup failed.!! "+ error.message);
