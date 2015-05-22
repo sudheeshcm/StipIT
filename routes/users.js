@@ -201,8 +201,10 @@ router.get('/verify/:username/:token',function(req,res){
 				                console.log('Error in Saving user: '+err);  
 				                throw err;  
 				            }
-				        console.log('Email successfully verified.');    
-				        res.send('<h2>Email successfully verified.</h2><br><a href="/login">Login page</a>');
+					        console.log('Email successfully verified.');    
+					        res.render('info', {
+							    message: 'Email successfully verified.',
+							});
 				        });
 			        }    
 			        else

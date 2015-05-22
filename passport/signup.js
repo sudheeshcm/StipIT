@@ -83,7 +83,7 @@ module.exports = function(passport){
                             mailOptions={
                                         to : req.body.email,
                                         subject : "Please confirm your Stip_iT Email account",
-                                        html : "Hello,<br> Please Click on the link to verify your Stip_iT account email.<br><a href="+link+">Click here to verify</a><br>Regards,<br>Stip_iT Team" 
+                                        html : "Hello,<br><br> Please Click on the link to verify your Stip_iT account.<br><a href="+link+">Click here to verify</a><br><br>Regards,<br>Stip_iT Team" 
                             }
                             console.log(mailOptions);
                             transporter.sendMail(mailOptions, function(error, info){
