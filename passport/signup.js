@@ -65,9 +65,11 @@ module.exports = function(passport){
                         newUser.password = createHash(password);
                         newUser.email = req.body.email;
                         newUser.emailVerified = false;
+                        newUser.createdAt = Date.now();
                         /*newUser.firstName = req.param('firstName');
                         newUser.lastName = req.param('lastName');*/
                         newUser.signupToken = token;
+                        newUser.followers = 0;
                         console.log("Account verification token: ", newUser.signupToken);
                         // save the user
                         newUser.save(function(err) {
@@ -89,7 +91,10 @@ module.exports = function(passport){
                             transporter.sendMail(mailOptions, function(error, info){
                                 if(error){
                                                 console.log(error);
-                                                res.end("error");
+                                                res.render('error', {
+                                                    message: error,
+                                                    error: error
+                                                });
                                 }else{
                                                 console.log("Message sent: " + info.response);
                                 }

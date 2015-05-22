@@ -68,11 +68,7 @@ router.post('/resetPass', function(req, res, next) {
 			        res.json(data);
 		    }
 
-	    	console.log("Node mailer called..!!");
-	    	console.log("Token value: ", token);
-	    	
 	    	if(token != ''){
-
 				// NB! No need to recreate the transporter object. You can use
 				// the same transporter object for all e-mails
 
@@ -186,13 +182,16 @@ router.get('/verify/:username/:token',function(req,res){
 
 	console.log("Verify called, Username: "+req.params.username+", token:"+req.params.token);
 	console.log(req.protocol+":/"+req.get('host'));
-	/*if((req.protocol+"://"+req.get('host'))==("http://"+host))
-				{
 
-				    console.log("Domain is matched. Information is from Authentic email");*/
 	        User.findOne({ username: req.params.username}, function(err, user) {
-	        	
-    			    if (user && user.signupToken == req.params.token) {
+	        		if(user && user.emailVerified == true) {
+	        				console.log('Account already verified.');    
+							res.render('error', {
+							    message: 'Account already verified.',
+							    error: {}
+							});
+	        		}
+    			    else if(user && user.signupToken == req.params.token) {
 			            console.log("email is verified");
 			            user.emailVerified = true;
 			            user.signupToken = undefined;
@@ -203,7 +202,7 @@ router.get('/verify/:username/:token',function(req,res){
 				            }
 					        console.log('Email successfully verified.');    
 					        res.render('info', {
-							    message: 'Email successfully verified.',
+							    message: 'Email successfully verified.'
 							});
 				        });
 			        }    
@@ -215,15 +214,7 @@ router.get('/verify/:username/:token',function(req,res){
 						    error: {}
 						});
 			        }
-			});        
-	/*}
-	else
-	{
-			res.render('error', {
-						    message: 'Request is from unknown source.',
-						    error: {}
-						  });
-	}*/
+			});      
 });
 
 // Generates hash using bCrypt

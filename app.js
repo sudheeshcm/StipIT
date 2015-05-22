@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 // var routes = require('./routes/index');
 var users = require('./routes/users');
-//var stipitHome = require('./routes/StipitHome');
+var stipitHome = require('./routes/StipitHome');
 
 var dbConfig = require('./db');
 var mongoose = require('mongoose');
@@ -47,9 +47,8 @@ initPassport(passport);
 
 var routes = require('./routes/index')(passport);
 app.use('/', routes);
-
 app.use('/users', users);
-//app.use('/h', stipitHome);
+app.use('/h', stipitHome);
 
 
 // catch 404 and forward to error handler
@@ -60,13 +59,12 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    console.log("Error hitttttttt..!!!!! ", err.message);
+    console.log("Error hit!! ", err.message);
     res.render('error', {
       message: err.message,
       error: err

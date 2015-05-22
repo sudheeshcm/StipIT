@@ -5,51 +5,18 @@ module.exports = function(){
   var router = express.Router();
   app.set('view engine', 'ejs');
 
-  
-
-// Populates the Current User
-app.get('/CurrentUser', function(req, res) {
-     var user = Parse.User.current();
-     console.log("Current User Fetched, ID:" +user.id+", Username: "+ user.attributes.username);
-     res.json(user);
+  // Populates the Current User
+  app.get('/CurrentUser', function(req, res) {
+      if(req.user){
+       var user = req.user;
+       console.log("User logged in, ID:" +user._id+", Username: "+ user.username+" , Date: "+Date.now());
+       res.json(user); 
+      }
   });
 
-// Populates the Current User Followers
-app.get('/CurrentUserFollowers', function(req, res) {
-     var user = Parse.User.current();
-     console.log("Current User Fetched, ID:" +user.id+", Username: "+ user.attributes.username);
-     var FandF = Parse.Object.extend("FriendsAndFollowers");
-      var query = new Parse.Query(FandF);
-      query.equalTo("userObjectId", user.id);
-      query.find({
-          success: function(results) {
-              console.log(results.length + " User FandF fetched.");
-              var FollowersList = results[0].get('followers');
-              if (results[0].get('followers') != undefined) {
-                  console.log(results[0].get('username') + "'s Followers number: "+FollowersList.length);
-                  res.json({"NumberOfFollowers" : FollowersList.length});
-              }
-              else
-              {
-                  res.json({"NumberOfFollowers" : "0"});
-              }
-              //Test Code to run NSE India stock updation
-              Parse.Cloud.run('getPage', {
-                    success: function(data) {
-                      // ratings should be 4.5
-                      console.log("getPage called..!!");
-                      console.log(data);
-                    },
-                    error: function(error) {
-                      console.log("getPage call failed!!"+ error.message);
-                    }
-              });
-          },
-          error: function(error){
-              console.log("Current User's Follower query failed. Error: "+ error.message);
-          }
-      }); 
-  });
+  app.get('/FetchStockDetails', function(req, res) {
+      
+  });  
 
   return app;
 }();
