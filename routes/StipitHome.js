@@ -3,15 +3,13 @@ module.exports = function(){
   var express = require('express');
   var app = express();
   var router = express.Router();
-  var http = require('http');
+  // var http = require('http');
   var fs = require('fs');
   var AdmZip = require('adm-zip');
   var moment = require('moment');
   var csv = require("fast-csv");
   var Stock = require('../models/stocks');
-  var mongoose = require('mongoose');
-  var Promise = require('promise');
-  var async = require('async');
+  var fsthen = require('fs-then');
 
   var downloadDate, month, year;
   var rowCount = 0;
@@ -50,7 +48,7 @@ var getDownloadDates = function(){
     console.log("Download date: ",downloadDate);
 }
 
-var readCSVFile = function()
+var readCSVFile = function(downloadDate)
 {
       console.log("Reading NSE India Stock CSV..");
       var lineList = fs.readFileSync('./public/downloads/cm'+downloadDate+'bhav.csv').toString().split('\n');
@@ -63,7 +61,8 @@ var readCSVFile = function()
           if (err) {
               console.log("create Doc Recurse Error: ",err);
               status = "failure";
-              process.exit(1);
+              //process.exit(1);
+              return false;
           }
           if (lineList.length) {
               var line = lineList.shift();
@@ -75,13 +74,44 @@ var readCSVFile = function()
           } else {
               // After the last entry,
               console.log(rowCount + " entries pushed to stipit.stocks DB.");
+              return true;
           }
       }
 
       createDocRecurse(null);
 }
 
-app.get('/FetchStockDetails', function(req, res) {
+var zip, zipEntries;
+
+app.get('/fetchStockDetails', function(req, res) {
+    var status;
+    var unzipAll = function(){
+                req.on('end', function() {
+                        console.log("Trying to unzip.");
+                    try {   
+                        zip = new AdmZip("./public/downloads/nsebhav.zip");
+                        zipEntries = zip.getEntries();
+                        zip.extractAllTo(/*target path*/"./public/downloads/", /*overwrite*/true);
+                        status = true;
+                    } catch ( err ) { 
+                                console.log( 'Caught exception: ', err );
+                                status =  false;
+                    }      
+                });
+       // }, function(){        
+                if (status == false) {
+                  console.log("False");
+                  //return false;
+                }
+                else if (status == true){
+                  console.log("True"); 
+                  //return true;
+                }     
+                else{
+                  console.log("Invalid"); 
+                  //return false;
+                }
+        }//);
 
     console.log("FetchStockDetails called");
             getDownloadDates();
@@ -104,44 +134,30 @@ app.get('/FetchStockDetails', function(req, res) {
                 }
             );
             req.pipe(out);
-            req.on('end', function() {
-                try { 
-                    console.log("Trying to unzip.");
-                    var zip = new AdmZip("./public/downloads/nsebhav.zip"),
-                    zipEntries = zip.getEntries();
-                    zip.extractAllTo(/*target path*/"./public/downloads/", /*overwrite*/true);
-                    console.log('Zip file extracted to /public/downloads/ folder.');
-                    res.json({"status": "success", "Download Date": downloadDate});
-                } catch ( err ) { 
-                    console.log( 'Caught exception: ', err );
+            var isSuccess = unzipAll();
+                if (isSuccess == false) {
                     res.json({"status": "failure", "Download Date": downloadDate});
                 }
-            });
+                else if (isSuccess == true){
+                    res.json({"status": "success", "Download Date": downloadDate});
+                }  
+            
 });
 
 app.get('/populateStockDetails', function(req, res) {
 
     console.log("populateStockDetails called");    
-
-/*
-      },
-      function(out, status, done) {
-            console.log("Stock status: "+status);
-            if (status != "failure" && status != "") {
-                readCSVFile();
-                res.json({"status": status, "Download Date": downloadDate, "Rows processed": rowCount});
-            }
-            else{
-                done("Error - CSV not read");
-            }
-      } 
-    ], function(err) {
-      if (err){
-        console.log("Error hit during FetchStockDetails.", err); 
-        res.json({"status": status, "Download Date": downloadDate, "Rows processed": rowCount});
-      }
-    });*/
-
-
+    var isSuccess = false;
+    getDownloadDates();
+    var isSuccess = readCSVFile(downloadDate);
+          if(isSuccess == false){
+                console.log('Error while parsing the CSV file. ', err);
+                res.json({"status": "failure", "Download Date": downloadDate, "Rows processed": rowCount});
+          }
+          else{
+                  console.log('CSV file parsed. Data: '); 
+                  res.json({"status": "success", "Download Date": downloadDate, "Rows processed": rowCount});  
+          }
+});
 return app;
 }();
