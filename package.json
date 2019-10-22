@@ -16,7 +16,7 @@
     "ejs": "*",
     "passport": "~0.2.0",
     "passport-local": "~1.0.0",
-    "mongoose": "~3.8.12",
+    "mongoose": "~5.7.6",
     "bcrypt-nodejs": "*",
     "connect-flash": "*",
     "email-validator": "~1.0.1",
